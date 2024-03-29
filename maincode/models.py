@@ -18,12 +18,3 @@ class notification_data(models.Model):
 
     def __str__(self):
         return self.title
-    
-    
-class savejob(models.Model):
-    save_id = models.CharField(max_length=100)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Save the current user
-    
-    def __str__(self):
-        return self.title
-    
