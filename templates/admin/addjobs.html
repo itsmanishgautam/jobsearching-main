@@ -1,0 +1,68 @@
+{% extends "../base/base.html" %}
+
+{% block title %}
+Add Job
+{% endblock %}
+
+{% block content %}
+{% block style%}
+<style>
+    .addjobbody {
+        padding-top: 50px;
+    }
+</style>
+{% endblock %}
+
+<div class="addjobbody">
+    <div class="container mt-5">
+        <div class="row">
+            <!-- First grid for the form -->
+            <div class="col-md-6">
+                <h2>Add Job</h2>
+                <form method="post" action="{% url 'addjobs' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="job_title">Job Title:</label>
+                        <input type="text" class="form-control" id="job_title" name="job_title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="job_description">Job Description:</label>
+                        <textarea class="form-control" id="job_description" name="job_description" rows="4"
+                            required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo">Photo:</label>
+                        <input type="file" class="form-control-file" id="photo" name="photo" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Job</button>
+                </form>
+            </div>
+
+            <!-- Second grid for the notification section -->
+            <div class="col-md-6">
+                <h2>Notification</h2>
+                <form method="post" action="{% url 'notification_submit' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="text_notification">Text Notification:</label>
+                        <input type="text" class="form-control" id="text_notification" name="text_notification">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Notification</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- User applied data section -->
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <h2>User Applied Data</h2>
+                <ul>
+                    {% for application in applications %}
+                    <li>{{ application.user.username }} - {{ application.job_title }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

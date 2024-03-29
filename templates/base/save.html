@@ -1,0 +1,37 @@
+{% extends '../base/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block style %}
+<style>
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="feed-container">
+  {% for jobs in save_home_data %}
+  <div class="card">
+    <div class="card-content">
+      <h2 class="card-title">{{ jobs.job_title }}</h2>
+      <p class="card-description">{{ jobs.job_description }}</p>
+      <div class="button-container">
+      
+        <button class="apply-btn">Apply</button>
+
+        <button type="submit" class="delete-btn" method="post" action="{% url 'delete_home_data' jobs.id %}">Delete</button>
+  
+       
+      </div>
+    </div>
+    <div class="card-image-container">
+      {% if jobs.photo %}
+      <img class="card-image" src="{{ jobs.photo.url }}" alt="{{ jobs.job_title }}">
+      {% else %}
+      <p>No Photo Available</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

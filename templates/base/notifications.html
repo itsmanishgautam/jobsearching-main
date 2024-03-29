@@ -1,0 +1,74 @@
+{% extends "base/base.html" %}
+
+{% block title %}
+Notifications
+{% endblock %}
+
+{% block style %}
+<style>
+    .container {
+        margin-top: 80px;
+    }
+
+
+    .notification-table {
+        width: 100%;
+
+
+
+    }
+
+
+    .notification-table td {
+        padding: 12px;
+        /* Increase padding for better spacing */
+        border: 1px solid #dee2e6;
+        /* Add borders to table cells */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Notifications</h1>
+    <div class="notification-list">
+        {% if notifydata %}
+
+        <table class="notification-table">
+            <thead>
+
+            </thead>
+            <tbody>
+                {% for notifications in notifydata %}
+                <tr>
+                    <td>{{ notifications.text_notification }}
+                        {% if user.is_superuser %}
+                        <form method="post" action="{% url 'delete_notification' notifications.id %}">
+                            {% csrf_token %}
+                            <!-- <button type="submit" class="delete-btn">Delete</button> -->
+                            <button type="submit" class="delete-btnssss" style="background-color: red; color: white; border: none; padding: 10px 20px;">Delete</button>
+
+                        </form>
+
+                        
+                        {% endif %}
+
+
+                    </td>
+                    
+
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+
+
+
+
+
+    </div>
+</div>
+{% endblock %}

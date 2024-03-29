@@ -1,0 +1,140 @@
+{% extends '../base/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block style %}
+<style>
+
+  
+.feed-container {
+    /* background-color: #c21717; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-color: #e30e0e;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 100px;
+    
+    
+}
+
+.card {
+    border-color: #223bc7;
+    /* background-color: #5ea623; */
+    border-radius: 20px;
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px; 
+    align-items: center;
+    height: 400px;
+    width: 1300px;
+    align-items: center;
+}
+
+.card-content {
+    padding-left: 40px;
+    padding-right: 15px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+    /* text-align: justify; */
+    
+    /* background-color: #29d8c1; */
+}
+
+.card-title, .card-description {
+  /* text-align: justify; */
+    white-space: pre-line;
+    
+    
+}
+
+.card-image-container {
+    height: 250px;
+    width: 700px;
+    margin-right: 30px;
+    margin-top: -30px;
+    /* background-color: burlywood; */
+    display: flex; 
+    margin-top: 10px;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.card-image {
+    height: 300px;
+    width: 300px;
+    /* background-color: aqua; */
+}
+
+
+.button-container {
+    display: flex;
+    gap: 4px;
+}
+
+.button-container button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.button-container .save-btn:hover,
+.button-container .apply-btn:hover {
+    background-color: #45a049;
+}
+
+.button-container .delete-btn:hover {
+    background-color: #e30e0e;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="feed-container">
+  {% for jobs in data %}
+  <div class="card">
+    <div class="card-content">
+      <h2 class="card-title">{{ jobs.job_title }}</h2>
+      <p class="card-description">{{ jobs.job_description }}</p>
+      <div class="button-container">
+        
+
+        <form method="post" action="{% url 'save_home_data' %}">
+          {% csrf_token %}
+          <button type="submit" class="save-btn">Save</button>
+        </form>
+
+        <form method="post" action="{% url 'apply_home_data' %}">
+          {% csrf_token %}
+          <button type="submit" class="apply-btn">Apply</button>
+
+        </form>
+
+        {% if user.is_superuser %}
+        <form method="post" action="{% url 'delete_home_data' jobs.id %}">
+          {% csrf_token %}
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+        {% endif %}
+
+      </div>
+    </div>
+    <div class="card-image-container">
+      {% if jobs.photo %}
+      <img class="card-image" src="{{ jobs.photo.url }}" alt="{{ jobs.job_title }}">
+      {% else %}
+      <p>No Photo Available</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

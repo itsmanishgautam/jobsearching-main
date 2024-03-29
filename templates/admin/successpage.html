@@ -1,0 +1,57 @@
+{% extends "../base/base.html" %}
+
+{% block title %}Success Page{% endblock %}
+
+{% block style %}
+<style>
+    /* Custom CSS styles for centering content */
+    body {
+        background-color: #f0f0f0; /* Change the background color */
+        font-family: Arial, sans-serif; /* Change the font family */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 100vh;
+        margin: 0;
+    }
+    .content-wrapper {
+        text-align: center;
+    }
+    h1 {
+        color: #007bff; /* Change the heading color */
+    }
+    p {
+        color: #333; /* Change the paragraph text color */
+    }
+    ul {
+        list-style-type: none; /* Remove bullet points from the list */
+        padding: 0;
+    }
+    li {
+        margin-bottom: 10px; /* Adjust spacing between list items */
+    }
+    a {
+        color: #007bff; /* Change the link color */
+        text-decoration: none; /* Remove underline from links */
+    }
+    a:hover {
+        text-decoration: underline; /* Add underline on hover */
+    }
+    .button-wrapper {
+        margin-top: 20px; /* Adjust spacing between buttons */
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <h1>Data Added Successfully!</h1>
+    <p>Your data has been successfully added.</p>
+    <p>What would you like to do next?</p>
+    <div class="button-wrapper">
+        <a href="{% url 'addjobs' %}" class="btn btn-primary">Add More Data</a>
+        <a href="{% url 'home' %}" class="btn btn-secondary">Go to Home</a>
+    </div>
+</div>
+{% endblock %}

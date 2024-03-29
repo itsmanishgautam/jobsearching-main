@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{% block title %}My Website{% endblock %}</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  {% block style %}
+  <style>
+
+  </style>
+  {% endblock %}
+</head>
+
+<body>
+
+  {% block navbar %}
+
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top d-flex justify-content-between align-items-center"
+              style="height: 60px;">
+              <!-- Navbar Brand -->
+              <!-- <a class="navbar-brand" href="{% url 'home' %}">My Website</a> -->
+
+              <!-- Navbar Toggler -->
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <!-- Navbar Collapse -->
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar Items -->
+                <ul class="navbar-nav ml-auto d-flex align-items-center">
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Jobs <span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'manage_profile' %}">Manage Profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href= "{% url 'save_home_data' %}">Saved Jobs</a>
+
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'apply_home_data' %}">Applied Jobs</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'notificationpage' %}">Notification</a>
+                  </li>
+
+                  <!-- Display username if logged in -->
+                  <li class="nav-item d-flex align-items-center">
+                    {% if user.is_authenticated %}
+                    <a class="nav-link" href="#">Logged in as: {{ user.username }}</a>
+                    <form class="nav-link" action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link">Logout</button>
+                    </form>
+                    {% else %}
+                    <p class="nav-link">You are not logged in</p>
+                    <a href="{% url 'login' %}" class="nav-link">Log In</a>
+                    {% endif %}
+                  </li>
+                  <!-- End of Display username -->
+
+                  <!-- Admin Panel link -->
+                  <li class="nav-item">
+                    {% if user.is_superuser %}
+                    <a class="nav-link" href="{% url 'addjobs' %}">Admin Panel</a>
+                    {% endif %}
+                  </li>
+                </ul>
+
+                <!-- Search form -->
+                <form class="form-inline my-2 my-lg-0">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+                <!-- End of Search form -->
+              </div>
+              <!-- End of Navbar Collapse -->
+            </nav>
+
+   {% endblock %}
+
+
+            {% block content %}
+            {% endblock %}
+
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
