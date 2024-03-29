@@ -18,3 +18,11 @@ class notification_data(models.Model):
 
     def __str__(self):
         return self.title
+    
+class SaveJob(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, on_delete=models.CASCADE)
+    saved_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'job')

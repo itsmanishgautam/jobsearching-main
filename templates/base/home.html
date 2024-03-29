@@ -103,11 +103,15 @@
   <div class="card">
     <div class="card-content">
       <h2 class="card-title">{{ jobs.job_title }}</h2>
+      <h2>{{ jobs.job_id }}</h2>
+
       <p class="card-description">{{ jobs.job_description }}</p>
       <div class="button-container">
         
 
-        <form method="post" action="{% url 'save_home_data' %}">
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'savehome_submit'  user.id jobs.id %}">
+
           {% csrf_token %}
           <button type="submit" class="save-btn">Save</button>
         </form>
@@ -117,6 +121,7 @@
           <button type="submit" class="apply-btn">Apply</button>
 
         </form>
+        {% endif %}
 
         {% if user.is_superuser %}
         <form method="post" action="{% url 'delete_home_data' jobs.id %}">

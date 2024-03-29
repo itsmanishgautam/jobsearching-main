@@ -7,14 +7,14 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 # from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 # from django.http import HttpResponseNotFound
 # from .forms import UserRegistrationForm
 from django.core.exceptions import ValidationError
 
 from .models import notification_data
-from .models import Job
+from .models import Job,SaveJob
 
 
 @login_required
@@ -135,38 +135,61 @@ def delete_notification(request,notifications_id):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# @login_required
-# def save_home_data(request, jobs_id):
-#         if request.user.is_authenticated:
-#             savedata = Job.objects.get(id=jobs_id)
-#             savedata.delete()
-#             pass
-#         else:
-#             return render(request, 'base/home.html', {'savedata': savedata})
-    
 @login_required
 def save_home_data(request):
         if request.user.is_authenticated:
             return render(request, 'base/save.html')
         else:
             return render(request, 'base/save.html')
+
+
+
+
+
+
+
+
+
+
+
+
+# def savehome_submit(request,jobs_id,user_id):
+#     if request.user.is_authenticated:
+#             savejobid = Job.objects.get(id=jobs_id)
+#             saveuserid = User.objects.get(id=user_id)
+#             save_job = SaveJob(savejobid=savejobid,saveuserid=saveuserid)
+#             save_job.save() 
+#             return render(request, 'base/home.html')
+#     else:
+#             return render(request, 'base/home.html')
+        
+# def savehome_submit(request, job_id, user_id):
+#     if request.user.is_authenticated:
+#         # Assign job_id to jobs_id (Variable naming corrected)
+#         jobs_id = job_id
+#         # Retrieve the job using job_id
+#         job = get_object_or_404(Job, id=jobs_id)
+
+
+
+def savehome_submit(request, user_id, jobs_id):
+    if request.user.is_authenticated:
+        job_id = jobs_id
+        job = get_object_or_404(Job, id=job_id)
+        user = get_object_or_404(User, id=user_id)
+        
+        # Check if the job is already saved by the user
+        if not SaveJob.objects.filter(user=user, job=job).exists():
+            # If not saved yet, create and save the SaveJob object
+            save_job = SaveJob(user=user, job=job)
+            save_job.save()
+        
+        return render(request, 'base/home.html')
+    else:
+        return render(request, 'base/home.html')
+
+    
+
 
 @login_required
 def apply_home_data(request):

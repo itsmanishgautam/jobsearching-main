@@ -48,6 +48,7 @@ urlpatterns = [
 
 
     path('savejobs/', views.save_home_data, name='save_home_data'),
+    path('savejobhome/<int:user_id>/<int:jobs_id>/',views.savehome_submit,name='savehome_submit'),
     path('applyjobs/', views.apply_home_data, name='apply_home_data'),
 
 
