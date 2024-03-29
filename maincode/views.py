@@ -131,47 +131,7 @@ def delete_notification(request,notifications_id):
         return render(request, 'base/notifications.html', {'ndata': notifydata})
 
 
-
-
-
-
 @login_required
-def save_home_data(request):
-        if request.user.is_authenticated:
-            return render(request, 'base/save.html')
-        else:
-            return render(request, 'base/save.html')
-
-
-
-
-
-
-
-
-
-
-
-
-# def savehome_submit(request,jobs_id,user_id):
-#     if request.user.is_authenticated:
-#             savejobid = Job.objects.get(id=jobs_id)
-#             saveuserid = User.objects.get(id=user_id)
-#             save_job = SaveJob(savejobid=savejobid,saveuserid=saveuserid)
-#             save_job.save() 
-#             return render(request, 'base/home.html')
-#     else:
-#             return render(request, 'base/home.html')
-        
-# def savehome_submit(request, job_id, user_id):
-#     if request.user.is_authenticated:
-#         # Assign job_id to jobs_id (Variable naming corrected)
-#         jobs_id = job_id
-#         # Retrieve the job using job_id
-#         job = get_object_or_404(Job, id=jobs_id)
-
-
-
 def savehome_submit(request, user_id, jobs_id):
     if request.user.is_authenticated:
         job_id = jobs_id
@@ -188,7 +148,42 @@ def savehome_submit(request, user_id, jobs_id):
     else:
         return render(request, 'base/home.html')
 
-    
+ 
+
+
+
+
+
+
+
+@login_required
+def save_home_data(request):
+        if request.user.is_authenticated:
+            saveddata = SaveJob.objects.all().order_by('-id')  
+            return render(request, 'base/save.html', {'saveddata': saveddata})
+        else:
+            return redirect('login')
+
+
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
 
 
 @login_required
