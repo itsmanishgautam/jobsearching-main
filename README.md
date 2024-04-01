@@ -1,11 +1,12 @@
-﻿# jobsearching
+Sure, here's the updated list with the specified items bolded:
 
-﻿# Its not fully completed. once its i will update here
-﻿# url wroks
-﻿# login signup works
-﻿# few data added
-﻿# delete job works
-﻿# notification delete work
-﻿# few html pages created
-﻿# save data
-# delete saved data works
+- **url wroks**
+- **login signup works**
+- **few data added**
+- **delete job works**
+- **notification delete work**
+- **few html pages created**
+- **save data**
+- **delete saved data works**
+
+Let me know if you need further assistance!
