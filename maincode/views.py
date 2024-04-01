@@ -132,16 +132,16 @@ def delete_notification(request,notifications_id):
 
 
 @login_required
-def savehome_submit(request, user_id, jobs_id):
+def savehome_submit(request, jobs_id):
     if request.user.is_authenticated:
+        user = request.user
         job_id = jobs_id
         job = get_object_or_404(Job, id=job_id)
-        user = get_object_or_404(User, id=user_id)
         
         # Check if the job is already saved by the user
         if not SaveJob.objects.filter(user=user, job=job).exists():
             # If not saved yet, create and save the SaveJob object
-            save_job = SaveJob(user=user, job=job)
+            save_job = SaveJob(user = request.user,job=job)
             save_job.save()
         
         return render(request, 'base/home.html')
@@ -150,16 +150,10 @@ def savehome_submit(request, user_id, jobs_id):
 
  
 
-
-
-
-
-
-
 @login_required
 def save_home_data(request):
         if request.user.is_authenticated:
-            saveddata = SaveJob.objects.all().order_by('-id')  
+            saveddata = SaveJob.objects.filter(user=request.user).order_by('-id')
             return render(request, 'base/save.html', {'saveddata': saveddata})
         else:
             return redirect('login')
@@ -167,8 +161,11 @@ def save_home_data(request):
 
 
 
-
-
+@login_required
+def saved_delete_home_data(request, savedjob_id):   
+    saved_job = get_object_or_404(SaveJob, id=savedjob_id)
+    saved_job.delete()
+    return redirect('home')
 
 
 

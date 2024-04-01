@@ -43,12 +43,22 @@ urlpatterns = [
     path('noficationsubmit/',views.notification_submit,name='notification_submit'),
     path('notification/<int:notifications_id>', views.delete_notification, name='delete_notification'),
     path('manageprofile/',views.manage_profile,name='manage_profile'),
-
-
-
-
+    path('savejobhome/<int:jobs_id>/',views.savehome_submit,name='savehome_submit'),
     path('savejobs/', views.save_home_data, name='save_home_data'),
-    path('savejobhome/<int:user_id>/<int:jobs_id>/',views.savehome_submit,name='savehome_submit'),
+
+
+
+
+
+    path('savedelete/<int:savedjob_id>/',views.saved_delete_home_data,name='saved_delete_home_data'),
+
+
+
+
+
+
+
+
     path('applyjobs/', views.apply_home_data, name='apply_home_data'),
 
 

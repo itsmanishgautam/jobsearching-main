@@ -110,7 +110,7 @@
         
 
         {% if user.is_authenticated %}
-        <form method="post" action="{% url 'savehome_submit'  user.id jobs.id %}">
+        <form method="post" action="{% url 'savehome_submit' jobs.id %}">
 
           {% csrf_token %}
           <button type="submit" class="save-btn">Save</button>
