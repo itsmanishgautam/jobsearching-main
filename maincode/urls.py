@@ -46,12 +46,18 @@ urlpatterns = [
     path('savejobhome/<int:job_id>/',views.savehome_submit,name='savehome_submit'),
     path('savejobs/', views.save_home_data, name='save_home_data'),
 
+    
+
+    path('applied/', views.apply_home_data, name='apply_home_data'),
 
 
 
 
     path('savedelete/<int:savedjob_id>/',views.saved_delete_home_data,name='saved_delete_home_data'),
-    path('applyjobshome/<int:job_id>/',views.applyportal_home_data,name='applyportal_home_data'),
+    path('applyjobhome/<int:job_id>/',views.applyportal_home_data,name='applyportal_home_data'),
+    path('changesignupdata/',views.changesignupdata,name='changesignupdata'),
+    
+
 
 
 

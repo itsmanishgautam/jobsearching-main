@@ -91,7 +91,7 @@
       <!-- <h2>{{ savedjob.job.id }}</h2> -->
       <p class="card-description">{{ savedjob.job.job_description }}</p>
       <div class="button-container">
-        <form method="post" action="{% url 'applyportal_home_data' savedjob.id %}">
+        <form method="post" action="{% url 'applyportal_home_data' savedjob.job.id %}">
           {% csrf_token %}
           <button type="submit" class="apply-btn">Apply</button>
         </form>

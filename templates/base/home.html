@@ -118,9 +118,20 @@
 
         <form method="post" action="{% url 'applyportal_home_data' job.id %}">
           {% csrf_token %}
-          <button type="submit" class="apply-btn">Apply</button>
+          <button type="submit" class="apply-btn">Apply
+
+          <!-- <a class="nav-link" href="{% url 'manage_profile' %}">Apply</a> -->
+
+
+          </button>
 
         </form>
+
+        
+
+
+
+        
         {% endif %}
 
         {% if user.is_superuser %}

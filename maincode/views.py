@@ -169,17 +169,33 @@ def saved_delete_home_data(request, savedjob_id):
     return redirect('save_home_data')
 
 
-def applyportal_home_data(request,):
-    return redirect('/')
+
+
+@login_required
+def manage_profile(request):
+        if request.user.is_authenticated:
+            return render(request, 'base/manageprofile.html')
+        else:
+            return render(request, 'base/manageprofile.html')
 
 
 
+def changesignupdata(request):
+    if request.method == 'POST':
+        current_user = request.user
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
 
-   
+        if password1 == password2:     
+                current_user.set_password(password1)
+                current_user.save()
+                messages.success(request, 'Password Changed')
+                return redirect('manage_profile') 
+        else:
+            messages.error(request, 'Passwords do not match')
+            return redirect('manage_profile')
 
-
-
-
+    return redirect('manage_profile')
 
 
 
@@ -189,18 +205,42 @@ def applyportal_home_data(request,):
 @login_required
 def apply_home_data(request):
         if request.user.is_authenticated:
-            return render(request, 'base/apply.html')
+            return render(request, 'base/applied.html')
         else:
-            return render(request, 'base/apply.html')
+            return render(request, 'base/applied.html')
+        
 
 
 
-@login_required
-def manage_profile(request):
-        if request.user.is_authenticated:
-            return render(request, 'base/manageprofile.html')
-        else:
-            return render(request, 'base/manageprofile.html')
+def applyportal_home_data(request, job_id): 
+    saveddata = Job.objects.filter(id=job_id)  # Assuming job_id is a field in the Job model
+
+    context = {'data': saveddata}  # Corrected context dictionary
+
+    return render(request, 'base/applyjobtemp.html', context)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
