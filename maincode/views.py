@@ -12,6 +12,7 @@ from django.shortcuts import render, redirect,get_object_or_404
 # from django.http import HttpResponseNotFound
 # from .forms import UserRegistrationForm
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
 
 from .models import notification_data
 from .models import Job,SaveJob
@@ -73,8 +74,8 @@ def home(request):
     
 @user_passes_test(lambda u: u.is_superuser)
 @login_required
-def delete_home_data(request, jobs_id):
-    jobdata = Job.objects.get(id=jobs_id)
+def delete_home_data(request, job_id):
+    jobdata = Job.objects.get(id=job_id)
     jobdata.delete()
     return redirect('home')
 
@@ -132,10 +133,9 @@ def delete_notification(request,notifications_id):
 
 
 @login_required
-def savehome_submit(request, jobs_id):
+def savehome_submit(request, job_id):
     if request.user.is_authenticated:
         user = request.user
-        job_id = jobs_id
         job = get_object_or_404(Job, id=job_id)
         
         # Check if the job is already saved by the user
@@ -165,9 +165,12 @@ def save_home_data(request):
 def saved_delete_home_data(request, savedjob_id):   
     saved_job = get_object_or_404(SaveJob, id=savedjob_id)
     saved_job.delete()
-    return redirect('home')
+    
+    return redirect('save_home_data')
 
 
+def applyportal_home_data(request,):
+    return redirect('/')
 
 
 

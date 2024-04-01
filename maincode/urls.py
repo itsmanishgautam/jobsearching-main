@@ -37,13 +37,13 @@ urlpatterns = [
 
     path('signupdata/', views.signup_register, name='signupdata/'),
     path('addjobs/',views.addjobs, name='addjobs'),
-    path('delete/<int:jobs_id>', views.delete_home_data, name='delete_home_data'),
+    path('delete/<int:job_id>', views.delete_home_data, name='delete_home_data'),
     path('success/', views.success_page, name='success_page'),
     path('notification/',views.notificationpage,name='notificationpage'),
     path('noficationsubmit/',views.notification_submit,name='notification_submit'),
     path('notification/<int:notifications_id>', views.delete_notification, name='delete_notification'),
     path('manageprofile/',views.manage_profile,name='manage_profile'),
-    path('savejobhome/<int:jobs_id>/',views.savehome_submit,name='savehome_submit'),
+    path('savejobhome/<int:job_id>/',views.savehome_submit,name='savehome_submit'),
     path('savejobs/', views.save_home_data, name='save_home_data'),
 
 
@@ -51,6 +51,8 @@ urlpatterns = [
 
 
     path('savedelete/<int:savedjob_id>/',views.saved_delete_home_data,name='saved_delete_home_data'),
+    path('applyjobshome/<int:job_id>/',views.applyportal_home_data,name='applyportal_home_data'),
+
 
 
 
