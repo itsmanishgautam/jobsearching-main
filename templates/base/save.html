@@ -88,10 +88,10 @@
   <div class="card">
     <div class="card-content">
       <h2 class="card-title">{{ savedjob.job.job_title }}</h2>
-      <h2>{{ savedjob.job.id }}</h2>
+      <!-- <h2>{{ savedjob.job.id }}</h2> -->
       <p class="card-description">{{ savedjob.job.job_description }}</p>
       <div class="button-container">
-        <form method="post" action="{% url 'apply_home_data' %}">
+        <form method="post" action="{% url 'applyportal_home_data' savedjob.id %}">
           {% csrf_token %}
           <button type="submit" class="apply-btn">Apply</button>
         </form>

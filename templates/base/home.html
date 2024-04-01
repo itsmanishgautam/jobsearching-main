@@ -99,24 +99,24 @@
 
 {% block content %}
 <div class="feed-container">
-  {% for jobs in data %}
+  {% for job in data %}
   <div class="card">
     <div class="card-content">
-      <h2 class="card-title">{{ jobs.job_title }}</h2>
-      <h2>{{ jobs.job_id }}</h2>
+      <h2 class="card-title">{{ job.job_title }}</h2>
+      <h2>{{ job.job_id }}</h2>
 
-      <p class="card-description">{{ jobs.job_description }}</p>
+      <p class="card-description">{{ job.job_description }}</p>
       <div class="button-container">
         
 
         {% if user.is_authenticated %}
-        <form method="post" action="{% url 'savehome_submit' jobs.id %}">
+        <form method="post" action="{% url 'savehome_submit' job.id %}">
 
           {% csrf_token %}
           <button type="submit" class="save-btn">Save</button>
         </form>
 
-        <form method="post" action="{% url 'apply_home_data' %}">
+        <form method="post" action="{% url 'applyportal_home_data' job.id %}">
           {% csrf_token %}
           <button type="submit" class="apply-btn">Apply</button>
 
@@ -124,7 +124,7 @@
         {% endif %}
 
         {% if user.is_superuser %}
-        <form method="post" action="{% url 'delete_home_data' jobs.id %}">
+        <form method="post" action="{% url 'delete_home_data' job.id %}">
           {% csrf_token %}
           <button type="submit" class="delete-btn">Delete</button>
         </form>
@@ -133,8 +133,8 @@
       </div>
     </div>
     <div class="card-image-container">
-      {% if jobs.photo %}
-      <img class="card-image" src="{{ jobs.photo.url }}" alt="{{ jobs.job_title }}">
+      {% if job.photo %}
+      <img class="card-image" src="{{ job.photo.url }}" alt="{{ job.job_title }}">
       {% else %}
       <p>No Photo Available</p>
       {% endif %}
