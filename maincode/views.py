@@ -13,9 +13,10 @@ from django.shortcuts import render, redirect,get_object_or_404
 # from .forms import UserRegistrationForm
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
+from django.http import HttpResponseForbidden
 
 from .models import notification_data
-from .models import Job,SaveJob
+from .models import Job,SaveJob,Application
 
 
 @login_required
@@ -223,6 +224,22 @@ def applyportal_home_data(request, job_id):
 
 
 
+    
+# def applydata_submit(request, job_id):
+#     if request.method == 'POST':
+#         user = request.user
+#         job = Job.objects.get(id=job_id)
+#         fullname = request.POST.get('fullname')
+#         email = request.POST.get('email')
+#         phone = request.POST.get('phone')
+#         experience = request.POST.get('experience')
+#         resume = request.FILES['resume']
+#         application = Application.objects.create(job=job, fullname=fullname, email=email, phone=phone, experience=experience, resume=resume)
+#         application.save()
+#         return redirect('success_page')  # Redirect to a success page or any other page
+#     else:
+#         job = Job.objects.get(id=job_id)
+#         return render(request, 'apply_job.html', {'job': job})
 
 
 
@@ -232,6 +249,36 @@ def applyportal_home_data(request, job_id):
 
 
 
+
+def applydata_submit(request, job_id):
+    if request.method == 'POST':
+        user = request.user
+        job = Job.objects.get(id=job_id)
+
+        # Check if the user has already applied for the job
+        if Application.objects.filter(job=job, user=user).exists():
+            return HttpResponseForbidden("You have already applied for this job.")
+        else:
+
+            fullname = request.POST.get('fullname')
+            email = request.POST.get('email')
+            phone = request.POST.get('phone')
+            experience = request.POST.get('experience')
+            resume = request.FILES['resume']
+            
+            # Create and save the application
+            application = Application.objects.create(
+                job=job, user=user, fullname=fullname, email=email, phone=phone, 
+                experience=experience, resume=resume
+            )
+            application.save()
+            
+            return redirect('success_page')  # Redirect to a success page or any other page
+    else:
+        pass
+    # else:
+    #     job = Job.objects.get(id=job_id)
+    #     return render(request, 'apply_job.html', {'job': job})
 
 
 

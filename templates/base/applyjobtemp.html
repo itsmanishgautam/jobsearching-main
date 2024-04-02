@@ -93,12 +93,18 @@
             <h3>{{ job.job_title }}</h3>
             <p>{{ job.job_description }}</p>
         </div>
-        {% endfor %}
+        
 
     </div>
 
     <div class="form-container">
-        <form method="post" action="your_action_url">
+        <!-- <form method="post" action="your_action_url"> -->
+            <form method="post" action="{% url 'applydata_submit' job.id %}" enctype="multipart/form-data">
+            
+            {% csrf_token %}
+            
+           
+
             <div class="form-group">
                 <label for="fullname">Full Name:</label>
                 <input type="text" id="fullname" name="fullname" required>
@@ -133,5 +139,5 @@
         </form>
     </div>
 </div>
-
+{% endfor %}
 {% endblock %}

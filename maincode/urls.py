@@ -49,6 +49,8 @@ urlpatterns = [
     
 
     path('applied/', views.apply_home_data, name='apply_home_data'),
+    path('applieddata/<int:job_id>', views.applydata_submit, name='applydata_submit'),
+
 
 
 

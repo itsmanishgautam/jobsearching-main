@@ -50,7 +50,10 @@
     <p>Your data has been successfully added.</p>
     <p>What would you like to do next?</p>
     <div class="button-wrapper">
+        {% if user.is_superuser %}
         <a href="{% url 'addjobs' %}" class="btn btn-primary">Add More Data</a>
+        {% endif %}
+
         <a href="{% url 'home' %}" class="btn btn-secondary">Go to Home</a>
     </div>
 </div>
