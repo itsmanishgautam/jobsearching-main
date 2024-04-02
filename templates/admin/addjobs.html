@@ -4,7 +4,6 @@
 Add Job
 {% endblock %}
 
-{% block content %}
 {% block style%}
 <style>
     .addjobbody {
@@ -13,6 +12,7 @@ Add Job
 </style>
 {% endblock %}
 
+{% block content %}
 <div class="addjobbody">
     <div class="container mt-5">
         <div class="row">
@@ -53,16 +53,37 @@ Add Job
         </div>
 
         <!-- User applied data section -->
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <h2>User Applied Data</h2>
-                <ul>
-                    {% for application in applications %}
-                    <li>{{ application.user.username }} - {{ application.job_title }}</li>
-                    {% endfor %}
-                </ul>
+        <div class="row mt-5" style="font-family: Arial, sans-serif;">
+            <div class="col-md-12" style="background-color: #f2f2f2; padding: 20px;">
+                <h2 style="color: #333;">User Applied Data</h2>
+                <table class="table" style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: #ccc;">
+                            <th style="padding: 10px;">User</th>
+                            <th style="padding: 10px;">Job Title</th>
+                            <th style="padding: 10px;">Full Name</th>
+                            <th style="padding: 10px;">Email</th>
+                            <th style="padding: 10px;">Phone</th>
+                            <th style="padding: 10px;">Experience</th>
+                            <th style="padding: 10px;">Resume</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for application in application %}
+                        <tr style="background-color: #fff;">
+                            <td style="padding: 10px;">{{ application.user.username }}</td>
+                            <td style="padding: 10px;">{{ application.job.job_title }}</td>
+                            <td style="padding: 10px;">{{ application.fullname }}</td>
+                            <td style="padding: 10px;">{{ application.email }}</td>
+                            <td style="padding: 10px;">{{ application.phone }}</td>
+                            <td style="padding: 10px;">{{ application.experience }}</td>
+                            <td style="padding: 10px;"><a href="{{ application.resume.url }}" style="text-decoration: none; color: blue;">{{ application.resume.name }}</a></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    {% endblock %}
+</div>
+{% endblock %}

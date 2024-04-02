@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends '../base/base.html' %}
 
 {% block title %}
 Notifications
@@ -10,59 +10,58 @@ Notifications
         margin-top: 80px;
     }
 
-
     .notification-table {
         width: 100%;
-
-
-
     }
-
 
     .notification-table td {
         padding: 12px;
-        /* Increase padding for better spacing */
         border: 1px solid #dee2e6;
-        /* Add borders to table cells */
     }
+
 </style>
 {% endblock %}
 
+
+
+
 {% block content %}
-<div class="container">
-    <h1>Notifications</h1>
-    <div class="notification-list">
-        {% if notifydata %}
-
-        <table class="notification-table">
-            <thead>
-
-            </thead>
-            <tbody>
-                {% for notifications in notifydata %}
-                <tr>
-                    <td>{{ notifications.text_notification }}
-                        {% if user.is_superuser %}
-                        <form method="post" action="{% url 'delete_notification' notifications.id %}">
-                            {% csrf_token %}
-                            <!-- <button type="submit" class="delete-btn">Delete</button> -->
-                            <button type="submit" class="delete-btnssss" style="background-color: red; color: white; border: none; padding: 10px 20px;">Delete</button>
-
-                        </form>
-
-                        
-                        {% endif %}
+    <div class="container">
+        <h1>Notifications</h1>
 
 
-                    </td>
-                    
+            {% if notifydata %}
+
+                <table class="notification-table">
+                    <tbody>
+                        {% for notifications in notifydata %}
+                            <tr>
+                                 <td>{{ notifications.text_notification }}
+
+                                        {% if user.is_superuser %}
+                                        <form method="post" action="{% url 'delete_notification' notifications.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-btnssss"
+                                        style="background-color: red; color: white; border: none; padding: 10px 20px;">Delete</button>
+                                        </form>
+                                        {% endif %}
+
+                        {% endfor %}
+
+                                            {% for job in data %}
+                                            <form method="post" action="{% url 'applyportal_home_data' job.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="apply-btn">Apply</button>
+                                            </form>
+                                            {% endfor %}
+
+            {% endif %}
 
 
-                </tr>
-                {% endfor %}
+                                </td>
+                            </tr>
             </tbody>
         </table>
-        {% endif %}
 
 
 

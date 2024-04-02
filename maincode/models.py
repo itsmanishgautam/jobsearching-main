@@ -37,23 +37,10 @@ class SaveJob(models.Model):
         return self.user
     
 
-
-# class ApplyJob(models.Model):
-#     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-#     job = models.ForeignKey(Job, on_delete=models.CASCADE)
-#     saved_at = models.DateTimeField(auto_now_add=True)
-
-#     class Meta:
-#         unique_together = ('user', 'job')
-#     # This means that a user cannot save the same job multiple times.
-
-#     def __str__(self):
-#         return self.user
     
 
 class Application(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-
     job = models.ForeignKey(Job, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=100)
     email = models.EmailField()

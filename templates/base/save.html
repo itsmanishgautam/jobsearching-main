@@ -84,6 +84,8 @@
 
 {% block content %}
 <div class="feed-container">
+  
+  <h1>Saved Jobs</h1>
   {% for savedjob in saveddata %}
   <div class="card">
     <div class="card-content">
@@ -101,6 +103,8 @@
           {% csrf_token %}
           <button type="submit" class="delete-btn">Delete</button>
         </form>
+
+        
         
       </div>
     </div>
@@ -113,5 +117,6 @@
     </div>
   </div>
   {% endfor %}
+  
 </div>
 {% endblock %}

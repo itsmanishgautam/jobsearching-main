@@ -85,6 +85,12 @@ def delete_home_data(request, job_id):
 @login_required
 def addjobs(request):
     if request.method == 'POST':
+        
+
+        ndata = Application.objects.all().order_by('-id')  
+
+
+
         # Extract form data from the request
         job_title = request.POST.get('job_title')
         job_description = request.POST.get('job_description')
@@ -93,9 +99,13 @@ def addjobs(request):
         new_job = Job(job_title=job_title, job_description=job_description, photo=photo)
         new_job.save()
         # Redirect to a success page or wherever you want
-        return redirect('success_page') 
+        # return redirect('success_page') 
+        return render(request, 'admin/addjobs.html', {'application': ndata})
+    
     else:
-        return render(request, 'admin/addjobs.html')
+        ndata = Application.objects.all().order_by('-id')  
+        return render(request, 'admin/addjobs.html', {'application': ndata})
+        # return render(request, 'admin/addjobs.html')
 
 
 def success_page(request):
@@ -203,12 +213,37 @@ def changesignupdata(request):
 
 
 
+
+
+
+
+
+
+
+# @login_required
+# def apply_home_data(request):
+#         if request.user.is_authenticated:
+#             saveddata = Application.objects.filter(user=request.user).order_by('-id')
+            
+
+#             return render(request, 'base/applied.html', {'applieddata': saveddata})
+#         else:
+#             return render(request, 'base/applied.html')
+
+
+
 @login_required
 def apply_home_data(request):
-        if request.user.is_authenticated:
-            return render(request, 'base/applied.html')
-        else:
-            return render(request, 'base/applied.html')
+    if request.user.is_authenticated:
+        saveddata = Application.objects.filter(user=request.user).order_by('-id')
+        data = Job.objects.all().order_by('-id')  
+        context = {
+            'applieddata': saveddata,
+            'datas': data
+        }
+        return render(request, 'base/applied.html', context)
+    else:
+        return render(request, 'base/applied.html')
         
 
 
@@ -225,22 +260,6 @@ def applyportal_home_data(request, job_id):
 
 
     
-# def applydata_submit(request, job_id):
-#     if request.method == 'POST':
-#         user = request.user
-#         job = Job.objects.get(id=job_id)
-#         fullname = request.POST.get('fullname')
-#         email = request.POST.get('email')
-#         phone = request.POST.get('phone')
-#         experience = request.POST.get('experience')
-#         resume = request.FILES['resume']
-#         application = Application.objects.create(job=job, fullname=fullname, email=email, phone=phone, experience=experience, resume=resume)
-#         application.save()
-#         return redirect('success_page')  # Redirect to a success page or any other page
-#     else:
-#         job = Job.objects.get(id=job_id)
-#         return render(request, 'apply_job.html', {'job': job})
-
 
 
 
@@ -302,49 +321,6 @@ def applydata_submit(request, job_id):
 
 
 
-
-
-
-# @login_required
-# def notification_view(request):
-#     ndata = notification_data.objects.all() 
-#     return render(request, 'base/notifications.html', {'notifydata': ndata})
-
-
-# def signup_register(request):
-#     if request.method == 'POST':
-#         username = request.POST.get('username')
-#         password = request.POST.get('password')
-#         form  = UserRegistrationForm(request.POST)
-        
-#         if form.is_valid():
-#             if  username is not None and password is not None :
-        
-#              if not User.objects.filter(username__iexact=username).exists():
-        
-#                 if password:
-#                     try:
-#                         password_validation.validate_password(password, User)
-#                     except ValidationError as error:
-#                         print(error)
-#                         messages.info(request,''.join(x for x in error))
-                    
-#                         return render(request,'signup.html')     
-#                 user = User.objects.create(username=username)
-#                 user.set_password(password)
-#                 user.save()
-
-
-#             else:
-        
-#                 messages.info(request,f'username {username} already taken')
-            
-#             messages.info(request,"User Registered")
-#             return redirect('registration/login.html')
-#         else:
-#             messages.info(request,'Please correct errors!')
-
-#     return render(request,'registration/signup.html')
 
 
 

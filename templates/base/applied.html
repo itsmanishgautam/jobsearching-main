@@ -1,17 +1,95 @@
-
 {% extends '../base/base.html' %}
 
 {% block title %}Applied Data{% endblock %}
 
 {% block style %}
 <style>
+    .container {
+        margin-top: 50px;
+    }
 
+    .applied-jobs {
+        margin-top: 20px;
+    }
+
+    .applied-jobs-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .applied-jobs-table th,
+    .applied-jobs-table td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        text-align: left;
+    }
+
+    .applied-jobs-table th {
+        background-color: #f2f2f2;
+    }
+
+    .applied-jobs-table tbody tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .applied-jobs-table tbody tr:hover {
+        background-color: #ddd;
+    }
+
+    .applied-jobs-table a {
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    .applied-jobs-table a:hover {
+        text-decoration: underline;
+    }
+
+    .no-applied-jobs {
+        font-style: italic;
+        color: #666;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
+<div class="container">
+    <h1>Applied Jobs</h1>
 
-<h1>APPLY</h1>
+    <div class="applied-jobs">
+        {% if applieddata %}
+        <table class="applied-jobs-table">
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Experience</th>
+                    <th>Resume</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for application in applieddata %}
+                
 
+                <tr>
+               
+                    
+                    <td>{{ application.job.job_title }}</td>
+                    
+                    <td>{{ application.fullname }}</td>
+                    <td>{{ application.email }}</td>
+                    <td>{{ application.phone }}</td>
+                    <td>{{ application.experience }}</td>
+                    <td><a href="{{ application.resume.url }}">{{ application.resume.name }}</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="no-applied-jobs">No jobs applied yet.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
-

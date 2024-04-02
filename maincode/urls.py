@@ -51,11 +51,13 @@ urlpatterns = [
     path('applied/', views.apply_home_data, name='apply_home_data'),
     path('applieddata/<int:job_id>', views.applydata_submit, name='applydata_submit'),
 
-
-
-
-
     path('savedelete/<int:savedjob_id>/',views.saved_delete_home_data,name='saved_delete_home_data'),
+
+
+
+
+
+
     path('applyjobhome/<int:job_id>/',views.applyportal_home_data,name='applyportal_home_data'),
     path('changesignupdata/',views.changesignupdata,name='changesignupdata'),
     
