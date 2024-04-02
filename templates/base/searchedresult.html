@@ -12,11 +12,7 @@
     border-color: #e30e0e;
     margin-left: 200px;
     margin-right: 200px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-
-
-
+    margin-top: 100px;
   }
 
   .card {
@@ -37,17 +33,11 @@
     padding-right: 15px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: medium;
-    /* text-align: justify; */
-
-    /* background-color: #29d8c1; */
   }
 
   .card-title,
   .card-description {
-    /* text-align: justify; */
     white-space: pre-line;
-
-
   }
 
   .card-image-container {
@@ -55,21 +45,16 @@
     width: 700px;
     margin-right: 30px;
     margin-top: -30px;
-    /* background-color: burlywood; */
     display: flex;
     margin-top: 10px;
     justify-content: center;
-    /* Center horizontally */
     align-items: center;
-    /* Center vertically */
   }
 
   .card-image {
     height: 300px;
     width: 300px;
-    /* background-color: aqua; */
   }
-
 
   .button-container {
     display: flex;
@@ -99,58 +84,56 @@
 </style>
 {% endblock %}
 
+
+
+
+
 {% block content %}
-
-
-
-
-
-
-
-
 <div class="feed-container">
-  {% for job in data %}
-  <div class="card">
-    <div class="card-content">
-      <h2 class="card-title">{{ job.job_title }}</h2>
-      <h2>{{ job.job_id }}</h2>
-
-      <p class="card-description">{{ job.job_description }}</p>
-      <div class="button-container">
-
-
-        {% if user.is_authenticated %}
-        <form method="post" action="{% url 'savehome_submit' job.id %}">
-
-          {% csrf_token %}
-          <button type="submit" class="save-btn">Save</button>
-        </form>
-
-        <form method="post" action="{% url 'applyportal_home_data' job.id %}">
-          {% csrf_token %}
-          <button type="submit" class="apply-btn">Apply
-          </button>
-        </form>
-        {% endif %}
-
-        {% if user.is_superuser %}
-        <form method="post" action="{% url 'delete_home_data' job.id %}">
-          {% csrf_token %}
-          <button type="submit" class="delete-btn">Delete</button>
-        </form>
-        {% endif %}
-
+  {% if results %}
+    {% for job in results %}
+      <div class="card">
+        <div class="card-content">
+          <h2 class="card-title">{{ job.job_title }}</h2>
+          <h2>{{ job.job_id }}</h2>
+          <p class="card-description">{{ job.job_description }}</p>
+          <div class="button-container">
+            {% if user.is_authenticated %}
+              <form method="post" action="{% url 'savehome_submit' job.id %}">
+                {% csrf_token %}
+                <button type="submit" class="save-btn">Save</button>
+              </form>
+              <form method="post" action="{% url 'applyportal_home_data' job.id %}">
+                {% csrf_token %}
+                <button type="submit" class="apply-btn">Apply</button>
+              </form>
+            {% endif %}
+            {% if user.is_superuser %}
+              <form method="post" action="{% url 'delete_home_data' job.id %}">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">Delete</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+        <div class="card-image-container">
+          {% if job.photo %}
+            <img class="card-image" src="{{ job.photo.url }}" alt="{{ job.job_title }}">
+          {% else %}
+            <p>No Photo Available</p>
+          {% endif %}
+        </div>
       </div>
-    </div>
-    <div class="card-image-container">
-      {% if job.photo %}
-      <img class="card-image" src="{{ job.photo.url }}" alt="{{ job.job_title }}">
-      {% else %}
-      <p>No Photo Available</p>
-      {% endif %}
-    </div>
-  </div>
-  {% endfor %}
+    {% endfor %}
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
 </div>
-
 {% endblock %}
+
+
+
+
+
+
+

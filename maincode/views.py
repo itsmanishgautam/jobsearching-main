@@ -166,6 +166,7 @@ def save_home_data(request):
         if request.user.is_authenticated:
             saveddata = SaveJob.objects.filter(user=request.user).order_by('-id')
             return render(request, 'base/save.html', {'saveddata': saveddata})
+            # return redirect('home')
         else:
             return redirect('login')
 
@@ -303,89 +304,27 @@ def applydata_submit(request, job_id):
 
 
 
-
-
-
-
-
-# def search_data(request,):
-#     text = request.GET.get('text')
-#     if query:
-#         if get text search in job model if the text is either in job_title or job_description and return the data 
-#         # Assuming YourModel has a 'name' field
-#         results = Job.objects.filter(name__icontains=query)
-#     else:
-#         results = Job.objects.none()  # No results initially
-
-#     return render(request, 'base/home.html', {'results': results, 'query': query})
-
-
-
-# def search_data(request):
-#     query = request.GET.get('text')  # Get the value of the 'text' parameter from the URL query string
-#     results = []  # Initialize results list
-
-#     if query:  # Check if the query parameter is not empty
-#         # Search for text in job_title or job_description fields of Job model
-#         results = Job.objects.filter(job_title__icontains=query) | Job.objects.filter(job_description__icontains=query)
-#         # You can adjust this query based on your actual model field names
-
-#     return render(request, 'base/home.html', {'results': results, 'query': query})
-
-
-# from django.shortcuts import render
-# from .models import Job  # Import your Job model here
-
 # def search_data(request):
 #     if request.method == 'POST':
-#         # Get the text from the POST request
-#         text = request.POST.get('text')
-#     else:
-#         # Get the text from the GET request
-#         text = request.GET.get('text')
-
-#     results = []  # Initialize results list
-
-#     if text:
-#         # Search for text in job_title or job_description fields of Job model
-#         results = Job.objects.filter(job_title__icontains=text) | Job.objects.filter(job_description__icontains=text)
-
-#     # Render the home.html template with the search results
-#     return render(request, 'base/home.html', {'results': results, 'query': text})
-
-
-# def search_data(request):
-#     query = request.GET.get('text')  # Get the value of the 'text' parameter from the URL query string
-#     results = []  # Initialize results list
-
+#     text = request.POST.get('text')  
 #     if query:  
-#         data = Job.objects.filter(title__icontains=query) | Job.objects.filter(description__icontains=query)
-        
-#         # Alternatively, you can use the Q object's logical OR operator |
-#         # results = Job.objects.filter(Q(title__icontains=query) | Q(description__icontains=query))
-    
-#     return render(request, 'base/home.html', {'querydata': data, 'query': query})
+#         results = Job.objects.filter(job_title=text) | Job.objects.filter(job_description=text)
+#         return render(request, 'base/searchedresult.html', {'results': results, 'query': text})
+#     else:
+#         return redirect('home')
+
 
 
 def search_data(request):
-    query = request.GET.get('text')  # Get the value of the 'text' parameter from the URL query string
-    results = []  # Initialize results list
-
-    if query:  # Check if the query parameter is not empty
-        # Search for text in job_title or job_description fields of Job model
-        results = Job.objects.filter(job_title__icontains=query) | Job.objects.filter(job_description__icontains=query)
-        return render(request, 'base/home.html', {'results': results, 'query': query})
+    if request.method == 'POST':
+        text = request.POST.get('text')  
+        if text:  # Check if text is not empty
+            results = Job.objects.filter(job_title__icontains=text) | Job.objects.filter(job_description__icontains=text)
+            return render(request, 'base/searchedresult.html', {'results': results, 'query': text})
+        else:
+            return redirect('home')
     else:
         return redirect('home')
-
-
-
-
-
-
-
-
-
 
 
 
