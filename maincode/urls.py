@@ -29,12 +29,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.login_view, name='login'),
     path('login/', views.login_view, name='login_view'),
-
     path('logout/', views.logout_view, name='logout'),
     path('signup/', views.signup_view, name='signup/'),
-
     path('signup/', views.signup_view, name='signup_view'),
-
     path('signupdata/', views.signup_register, name='signupdata/'),
     path('addjobs/',views.addjobs, name='addjobs'),
     path('delete/<int:job_id>', views.delete_home_data, name='delete_home_data'),
@@ -45,37 +42,12 @@ urlpatterns = [
     path('manageprofile/',views.manage_profile,name='manage_profile'),
     path('savejobhome/<int:job_id>/',views.savehome_submit,name='savehome_submit'),
     path('savejobs/', views.save_home_data, name='save_home_data'),
-
-    
-
     path('applied/', views.apply_home_data, name='apply_home_data'),
     path('applieddata/<int:job_id>', views.applydata_submit, name='applydata_submit'),
-
     path('savedelete/<int:savedjob_id>/',views.saved_delete_home_data,name='saved_delete_home_data'),
-
-
-
-
-
-
     path('applyjobhome/<int:job_id>/',views.applyportal_home_data,name='applyportal_home_data'),
     path('changesignupdata/',views.changesignupdata,name='changesignupdata'),
-
-
-    
     path('searchdata/',views.search_data,name='search_data'),
-
-    
-
-
-
-
-
-
-
-
-
-
     path('applyjobs/', views.apply_home_data, name='apply_home_data'),
 
 

@@ -39,28 +39,115 @@ def login_view(request):
 
 
 
+# def signup_register(request):
+#     if request.method == 'POST':
+#         username = request.POST.get('username')
+#         password1 = request.POST.get('password1')
+#         password2 = request.POST.get('password2')
+#         superkey = request.POST.get('superkey')
+
+
+#         if password1 == password2: 
+#             if User.objects.filter(username=username).exists():
+#                 messages.error(request, 'Username is already taken')
+#                 return redirect('signup_view') 
+#             else:
+#                 signupdata = User.objects.create_user(username=username, password=password1)
+#                 signupdata.save()
+
+#                 if superkey == 'iamadmin':
+#                     supersignupdata = User.objects.create_superuser(username=username, password=password1)
+#                     supersignupdata.save()
+
+#                 messages.success(request, 'Welcome')
+#                 return redirect('login_view')  
+#         else:
+#             messages.error(request, 'Passwords do not match')
+#             return redirect('signup_view') 
+
+#     return render(request, 'registration/signup.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
 def signup_register(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
+        superkey = request.POST.get('superkey')
 
-        if password1 == password2:  # Check if passwords match
-            # Check if username is already taken
+        # Check if passwords match
+        if password1 == password2:
+            # Check if username already exists
             if User.objects.filter(username=username).exists():
                 messages.error(request, 'Username is already taken')
-                return redirect('signup_view')  # Redirect to the signup page
+                return redirect('signup_view')  # Redirect to signup page with error message
             else:
-                # Create the user if username is unique and passwords match
+                # Create a new user
                 signupdata = User.objects.create_user(username=username, password=password1)
                 signupdata.save()
-                messages.success(request, 'Welcome')
-                return redirect('login_view')  # Redirect to the login page after successful signup
+
+                # Check if superkey is provided
+                if superkey == 'iamadmin':
+                    # Create a superuser
+                    supersignupdata = User.objects.create_superuser(username=username, password=password1)
+                    supersignupdata.save()
+
+                messages.success(request, 'Account created successfully')
+                return redirect('login_view')  # Redirect to login page after successful signup
         else:
             messages.error(request, 'Passwords do not match')
-            return redirect('signup_view')  # Redirect to the signup page if passwords don't match
+            return redirect('signup_view')  # Redirect to signup page with error message
 
     return render(request, 'registration/signup.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def signup_view(request):
@@ -212,27 +299,6 @@ def changesignupdata(request):
 
 
 
-
-
-
-
-
-
-
-
-
-# @login_required
-# def apply_home_data(request):
-#         if request.user.is_authenticated:
-#             saveddata = Application.objects.filter(user=request.user).order_by('-id')
-            
-
-#             return render(request, 'base/applied.html', {'applieddata': saveddata})
-#         else:
-#             return render(request, 'base/applied.html')
-
-
-
 @login_required
 def apply_home_data(request):
     if request.user.is_authenticated:
@@ -255,17 +321,6 @@ def applyportal_home_data(request, job_id):
     context = {'data': saveddata}  # Corrected context dictionary
 
     return render(request, 'base/applyjobtemp.html', context)
-
-
-
-
-
-    
-
-
-
-
-
 
 
 
@@ -302,19 +357,6 @@ def applydata_submit(request, job_id):
 
 
 
-
-
-# def search_data(request):
-#     if request.method == 'POST':
-#     text = request.POST.get('text')  
-#     if query:  
-#         results = Job.objects.filter(job_title=text) | Job.objects.filter(job_description=text)
-#         return render(request, 'base/searchedresult.html', {'results': results, 'query': text})
-#     else:
-#         return redirect('home')
-
-
-
 def search_data(request):
     if request.method == 'POST':
         text = request.POST.get('text')  
@@ -326,35 +368,4 @@ def search_data(request):
     else:
         return redirect('home')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def paginator_view(request):
-#     queryset = Job.objects.all()
-#     paginator = Paginator(queryset, 10)  # Change 10 to your desired page size
-#     page_number = request.GET.get('page')
-#     try:
-#         page_obj = paginator.page(page_number)
-#     except PageNotAnInteger:
-#         page_obj = paginator.page(1)  # If page is not an integer, show first page
-#     except EmptyPage:
-#         page_obj = paginator.page(paginator.num_pages)  # If page is out of range, show last page
-#     return render(request, 'your_template.html', {'page_obj': page_obj})
-
-
-
-# def not_found_view(request, path):
-#     return HttpResponseNotFound('<h1>Page not found</h1>')
 
