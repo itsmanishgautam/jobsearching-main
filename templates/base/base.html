@@ -61,6 +61,25 @@
           <a class="nav-link" href="{% url 'addjobs' %}">Admin Panel</a>
           {% endif %}
         </li>
+        <li>
+        
+          <div style="padding: 20px;">
+            <form method="post" action="{% url 'search_data' %}" style="display: flex;">
+              {% csrf_token %}
+                <input type="text" name="text" placeholder="Search by name or keywords" style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 5px 0 0 5px;">
+                <button type="submit" style="padding: 10px 20px; background-color: #4caf50; color: white; border: 1px solid #4caf50; border-radius: 0 5px 5px 0;">Search</button>
+            </form>
+        </div>
+        
+
+       
+
+
+
+
+
+
+      </li>
       </ul>
 
 

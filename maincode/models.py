@@ -47,3 +47,4 @@ class Application(models.Model):
     phone = models.CharField(max_length=15)
     experience = models.CharField(max_length=20)
     resume = models.FileField(upload_to='resumes/')
+

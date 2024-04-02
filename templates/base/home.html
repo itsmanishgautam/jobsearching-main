@@ -98,6 +98,22 @@
 {% endblock %}
 
 {% block content %}
+
+
+
+
+
+
+
+
+{% if querydata %}
+
+
+
+
+
+
+
 <div class="feed-container">
   {% for job in data %}
   <div class="card">
@@ -150,4 +166,95 @@
   </div>
   {% endfor %}
 </div>
+
+
+
+
+
+
+
+
+{% else %}
+
+
+
+
+
+
+
+
+
+<div class="feed-container">
+  {% for job in data %}
+  <div class="card">
+    <div class="card-content">
+      <h2 class="card-title">{{ job.job_title }}</h2>
+      <h2>{{ job.job_id }}</h2>
+
+      <p class="card-description">{{ job.job_description }}</p>
+      <div class="button-container">
+        
+
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'savehome_submit' job.id %}">
+
+          {% csrf_token %}
+          <button type="submit" class="save-btn">Save</button>
+        </form>
+
+        <form method="post" action="{% url 'applyportal_home_data' job.id %}">
+          {% csrf_token %}
+          <button type="submit" class="apply-btn">Apply
+
+          </button>
+
+        </form>
+
+        
+
+
+
+        
+        {% endif %}
+
+        {% if user.is_superuser %}
+        <form method="post" action="{% url 'delete_home_data' job.id %}">
+          {% csrf_token %}
+          <button type="submit" class="delete-btn">Delete</button>
+        </form>
+        {% endif %}
+
+      </div>
+    </div>
+    <div class="card-image-container">
+      {% if job.photo %}
+      <img class="card-image" src="{{ job.photo.url }}" alt="{{ job.job_title }}">
+      {% else %}
+      <p>No Photo Available</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+
+
+{% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 {% endblock %}

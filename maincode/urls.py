@@ -60,6 +60,11 @@ urlpatterns = [
 
     path('applyjobhome/<int:job_id>/',views.applyportal_home_data,name='applyportal_home_data'),
     path('changesignupdata/',views.changesignupdata,name='changesignupdata'),
+
+
+    
+    path('searchdata/',views.search_data,name='search_data'),
+
     
 
 
