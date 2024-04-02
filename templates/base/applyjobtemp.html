@@ -20,7 +20,8 @@
     }
 
     .job-data {
-        margin-right: 20px; /* Add margin to create space between job-data and form-container */
+        margin-right: 20px;
+        /* Add margin to create space between job-data and form-container */
     }
 
     .form-group {
@@ -86,25 +87,45 @@
 <div class="container">
     <div class="job-data">
 
-        <h2>Job Details</h2>
+        <h5>Job Details</h5>
 
         {% for job in data %}
         <div class="job-item">
             <h3>{{ job.job_title }}</h3>
-            <p>{{ job.job_description }}</p>
-        </div>
-        
 
+
+            <!-- <div style="height: 10px; width: 10px;">
+
+                {% if job.photo %}
+                <img class="card-image" src="{{ job.photo.url }}" alt="{{ job.job_title }}">
+                {% endif %}
+            </div> -->
+
+
+
+            <div>
+                {% if job.photo %}
+                <img class="card-image" style="height: 100px; width: 100px;" src="{{ job.photo.url }}" alt="{{ job.job_title }}">
+                {% endif %}
+            </div>
+            
+
+
+
+
+
+
+
+
+            <p style="text-align: left; white-space: pre-line;">{{ job.job_description }}</p>
+
+        </div>
     </div>
 
     <div class="form-container">
-        <!-- <form method="post" action="your_action_url"> -->
-            <form method="post" action="{% url 'applydata_submit' job.id %}" enctype="multipart/form-data">
-            
-            {% csrf_token %}
-            
-           
+        <form method="post" action="{% url 'applydata_submit' job.id %}" enctype="multipart/form-data">
 
+            {% csrf_token %}
             <div class="form-group">
                 <label for="fullname">Full Name:</label>
                 <input type="text" id="fullname" name="fullname" required>
@@ -139,5 +160,8 @@
         </form>
     </div>
 </div>
+
 {% endfor %}
+
+
 {% endblock %}

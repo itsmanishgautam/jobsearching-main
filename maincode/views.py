@@ -38,7 +38,6 @@ def login_view(request):
 
 
 
-
 # def signup_register(request):
 #     if request.method == 'POST':
 #         username = request.POST.get('username')
@@ -66,87 +65,6 @@ def login_view(request):
 #             return redirect('signup_view') 
 
 #     return render(request, 'registration/signup.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-def signup_register(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password1 = request.POST.get('password1')
-        password2 = request.POST.get('password2')
-        superkey = request.POST.get('superkey')
-
-        # Check if passwords match
-        if password1 == password2:
-            # Check if username already exists
-            if User.objects.filter(username=username).exists():
-                messages.error(request, 'Username is already taken')
-                return redirect('signup_view')  # Redirect to signup page with error message
-            else:
-                # Create a new user
-                signupdata = User.objects.create_user(username=username, password=password1)
-                signupdata.save()
-
-                # Check if superkey is provided
-                if superkey == 'iamadmin':
-                    # Create a superuser
-                    supersignupdata = User.objects.create_superuser(username=username, password=password1)
-                    supersignupdata.save()
-
-                messages.success(request, 'Account created successfully')
-                return redirect('login_view')  # Redirect to login page after successful signup
-        else:
-            messages.error(request, 'Passwords do not match')
-            return redirect('signup_view')  # Redirect to signup page with error message
-
-    return render(request, 'registration/signup.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -236,15 +154,13 @@ def savehome_submit(request, job_id):
         user = request.user
         job = get_object_or_404(Job, id=job_id)
         
-        # Check if the job is already saved by the user
         if not SaveJob.objects.filter(user=user, job=job).exists():
-            # If not saved yet, create and save the SaveJob object
             save_job = SaveJob(user = request.user,job=job)
-            save_job.save()
-        
-        return render(request, 'base/home.html')
+            save_job.save() 
+        return redirect('home') 
     else:
-        return render(request, 'base/home.html')
+        return redirect('home')
+    
 
  
 
@@ -367,5 +283,86 @@ def search_data(request):
             return redirect('home')
     else:
         return redirect('home')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def signup_register(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        superkey = request.POST.get('superkey')
+
+        # Check if passwords match
+        if password1 == password2:
+            # Check if username already exists
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username is already taken')
+                return redirect('signup_view')  # Redirect to signup page with error message
+            else:
+                # Create a new user
+                signupdata = User.objects.create_user(username=username, password=password1)
+                signupdata.save()
+
+                # Check if superkey is provided
+                if superkey == 'iamadmin':
+                    # Create a superuser
+                    supersignupdata = User.objects.create_superuser(username=username, password=password1)
+                    supersignupdata.save()
+
+                messages.success(request, 'Account created successfully')
+                return redirect('login_view')  # Redirect to login page after successful signup
+        else:
+            messages.error(request, 'Passwords do not match')
+            return redirect('signup_view')  # Redirect to signup page with error message
+
+    return render(request, 'registration/signup.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

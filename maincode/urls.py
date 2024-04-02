@@ -41,6 +41,7 @@ urlpatterns = [
     path('notification/<int:notifications_id>', views.delete_notification, name='delete_notification'),
     path('manageprofile/',views.manage_profile,name='manage_profile'),
     path('savejobhome/<int:job_id>/',views.savehome_submit,name='savehome_submit'),
+
     path('savejobs/', views.save_home_data, name='save_home_data'),
     path('applied/', views.apply_home_data, name='apply_home_data'),
     path('applieddata/<int:job_id>', views.applydata_submit, name='applydata_submit'),
