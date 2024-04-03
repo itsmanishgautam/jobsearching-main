@@ -264,12 +264,16 @@ def applydata_submit(request, job_id):
             )
             application.save()
             
-            return redirect('success_page')  # Redirect to a success page or any other page
+            # return redirect('success_page')  # Redirect to a success page or any other page
+            return render(request,'base/applysuccess.html')
     else:
         pass
     # else:
     #     job = Job.objects.get(id=job_id)
     #     return render(request, 'apply_job.html', {'job': job})
+
+
+
 
 
 
@@ -319,7 +323,7 @@ def signup_register(request):
                 # Check if superkey is provided
                 if superkey == 'iamadmin':
                     # Create a superuser
-                    supersignupdata = User.objects.create_superuser(username=username, password=password1)
+                    supersignupdata = User.objects.create_superuser(username=username, password=password1, superkey = superkey)
                     supersignupdata.save()
 
                 messages.success(request, 'Account created successfully')

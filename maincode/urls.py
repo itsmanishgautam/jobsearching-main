@@ -51,6 +51,9 @@ urlpatterns = [
     path('searchdata/',views.search_data,name='search_data'),
     path('applyjobs/', views.apply_home_data, name='apply_home_data'),
 
+    path('accounts/login/', views.login_view, name='login'),
+    path('manageprofile/', views.manage_profile, name='manage_profile'),
+
 
 
 
