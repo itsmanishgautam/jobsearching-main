@@ -8,13 +8,13 @@
 - **save data**
 - **delete saved data works**
 - **url jobs to job**
-**password change work**
-**database added**
-**sucesspage work**
-**all works**
+- **password change work**
+- **database added**
+- **sucesspage work**
+- **all works**
 
-**username: admin  password:admin**
-**username: user  password:user**
-**username: user1  password:user1**
+- **username: admin  password:admin**
+- **username: user  password:user**
+- **username: user1  password:user1**
 
 
